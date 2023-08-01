@@ -1,4 +1,3 @@
-// import generarJWT from "../helpers/jwt";
 import Usuario from "../models/usuario";
 
 //POST
