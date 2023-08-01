@@ -1,5 +1,6 @@
 import Usuario from "../models/usuario";
 import bcrypt from "bcrypt";
+
 //POST
 export const crearUsuario = async (req, res) => {
   try {
@@ -24,14 +25,13 @@ export const crearUsuario = async (req, res) => {
       uid: usuario._id,
     });
   } catch (error) {
-    console.log(error);
     res.status(400).json({
       mensaje: "El usuario no pudo ser creado",
     });
   }
 };
 
-//GET
+//POST
 export const login = async (req, res) => {
   try {
     const { email, password } = req.body;
@@ -60,6 +60,21 @@ export const login = async (req, res) => {
     console.log(error);
     res.status(404).json({
       mensaje: "Usuario o password incorrecto",
+    });
+  }
+};
+
+//GET (lista usuario)
+export const listarUsuarios = async (req, res) => {
+  try {
+    //buscar en la BD la collection de productos
+    const usuarios = await Usuario.find();
+    //envio la respuesta al frontend
+    res.status(200).json(usuarios);
+  } catch (error) {
+    console.log(error);
+    res.status(404).json({
+      mensaje: "Error al buscar los usuarios",
     });
   }
 };
