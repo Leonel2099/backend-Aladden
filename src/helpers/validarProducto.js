@@ -1,4 +1,5 @@
 import { check } from "express-validator";
+import resultadoValidacion from "./resultadoValidacion";
 
 const validarProducto = [
   check("nombreProducto")
@@ -41,7 +42,8 @@ const validarProducto = [
     .notEmpty()
     .withMessage("La url de la imagen es un dato obligatorio")
     .matches(/^(http(s?):)([/|.|\w|\s|-])*\.(?:png|jpe?g|gif|svg)$/)
-    .withMessage("La imagen debe ser una url valida, terminada en (png|jpe?g|gif|svg)")
+    .withMessage("La imagen debe ser una url valida, terminada en (png|jpe?g|gif|svg)"),
+    (req, res, next )=> { resultadoValidacion(req, res, next)}
 ];
 
 export default validarProducto;
