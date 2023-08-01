@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { check } from "express-validator";
-import { crearUsuario } from "../controllers/usuario.controllers";
+import { crearUsuario, login } from "../controllers/usuarios.controllers";
 
 const router = Router();
 
@@ -41,5 +41,6 @@ router.route("/nuevo").post(
   ],
   crearUsuario
 );
+router.route("/").post(login);
 
 export default router;

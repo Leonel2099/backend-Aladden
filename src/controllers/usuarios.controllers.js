@@ -28,3 +28,23 @@ export const crearUsuario = async (req, res) => {
     });
   }
 };
+
+//GET
+export const login = async (req, res) => {
+  try {
+    const { email} = req.body;
+    //verificamos que el mail existe en la bd
+    let usuario = await Usuario.findOne({ email });
+    if (!usuario) {
+      //si no encuentro al usuario
+      return res.status(404).json({
+        mensaje: "Correo o password invalido",
+      });
+    }
+  } catch (error) {
+    console.log(error);
+    res.status(404).json({
+      mensaje: "Usuario o password incorrecto",
+    });
+  }
+};
