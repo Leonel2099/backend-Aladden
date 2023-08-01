@@ -16,7 +16,7 @@ export const crearUsuario = async (req, res) => {
     usuario = new Usuario(req.body);
     //encriptar el password
     const salt = bcrypt.genSaltSync(10);
-    usuario.password = bcrypt.hashSync(password,salt);
+    usuario.password = bcrypt.hashSync(password, salt);
     await usuario.save();
     res.status(201).json({
       mensaje: "usuario creado",
@@ -34,7 +34,7 @@ export const crearUsuario = async (req, res) => {
 //GET
 export const login = async (req, res) => {
   try {
-    const { email } = req.body;
+    const { email, password } = req.body;
     //verificamos que el mail existe en la bd
     let usuario = await Usuario.findOne({ email });
     if (!usuario) {
@@ -43,6 +43,19 @@ export const login = async (req, res) => {
         mensaje: "Correo o password invalido",
       });
     }
+    //verificar si las contraseñas coinciden
+    const passwordValido = bcrypt.compareSync(password, usuario.password); // devuelve un valor booleano, true si los password coinciden
+    //preguntar si la variable es invalida
+    if (!passwordValido) {
+      return res.status(404).json({
+        mensaje: "Correo o password invalido - password",
+      });
+    }
+    //responder al frontend con el usuario valido
+    res.status(200).json({
+      mensaje: "El usuario es correcto",
+      nombreUsuario: usuario.nombreUsuario,
+    });
   } catch (error) {
     console.log(error);
     res.status(404).json({
