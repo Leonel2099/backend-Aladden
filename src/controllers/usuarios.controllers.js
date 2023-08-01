@@ -1,9 +1,9 @@
 import Usuario from "../models/usuario";
-
+import bcrypt from "bcrypt";
 //POST
 export const crearUsuario = async (req, res) => {
   try {
-    const { email } = req.body;
+    const { email, password } = req.body;
     //verificar si el email ya existe
     let usuario = await Usuario.findOne({ email }); //devulve un null
     if (usuario) {
@@ -14,6 +14,9 @@ export const crearUsuario = async (req, res) => {
     }
     //guardamos el nuevo usuario en la BD
     usuario = new Usuario(req.body);
+    //encriptar el password
+    const salt = bcrypt.genSaltSync(10);
+    usuario.password = bcrypt.hashSync(password,salt);
     await usuario.save();
     res.status(201).json({
       mensaje: "usuario creado",
@@ -31,7 +34,7 @@ export const crearUsuario = async (req, res) => {
 //GET
 export const login = async (req, res) => {
   try {
-    const { email} = req.body;
+    const { email } = req.body;
     //verificamos que el mail existe en la bd
     let usuario = await Usuario.findOne({ email });
     if (!usuario) {
