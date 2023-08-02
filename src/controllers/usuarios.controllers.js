@@ -59,7 +59,7 @@ export const login = async (req, res) => {
   } catch (error) {
     console.log(error);
     res.status(404).json({
-      mensaje: "Usuario o password incorrecto",
+      mensaje: "Correo o password incorrecto",
     });
   }
 };
