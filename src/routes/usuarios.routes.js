@@ -20,22 +20,23 @@ router.route("/nuevo").post(
       .withMessage("El email ingresado no es valido"),
     check("password", "La contraseña debe de ser de 8 caracteres")
       .isLength({
-        min: 8
+        min: 8,
+        max:9
       })
       .notEmpty()
-      .withMessage.withMessage("La contraseña es obligatoria")
-      .matches(/^(?=.*\d)(?=.*[\u0021-\u002b\u003c-\u0040])(?=.*[A-Z])(?=.*[a-z])\S{8,}$/)
+      .withMessage("La contraseña es obligatoria")
+      .matches(/^(?=.*\d)(?=.*[\u0021-\u002b\u003c-\u0040])(?=.*[A-Z])(?=.*[a-z])\S{8,9}$/)
       .withMessage(
         "La contraseña debe tener 8 caracteres, al menos un dígito, al menos una minúscula, al menos una mayúscula y al menos un caracter no alfanumérico."
       ),
     check("estado")
       .notEmpty()
-      .withMessage.withMessage("La estado es obligatoria")
+      .withMessage("La estado es obligatoria")
       .isIn(["activo", "inactivo"])
       .withMessage("La estado debe ser una opcion valida"),
     check("perfil")
       .notEmpty()
-      .withMessage.withMessage("El perfil es obligatoria")
+      .withMessage("El perfil es obligatoria")
       .isIn(["administrador", "usuario"])
       .withMessage("El perfil debe ser una opcion valida"),
   ],

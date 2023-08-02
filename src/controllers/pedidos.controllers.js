@@ -40,7 +40,7 @@ export const obtenerPedidoPorId = async (req, res) => {
       });
     }
     res.status(200).json(pedido);
-  } catch (err) {
+  } catch (error) {
     res.status(404).json({
       message: "Error al intentar obtener el pedido",
     });
@@ -62,7 +62,7 @@ export const actualizarPedido = async (req, res) => {
     pedido.estado = estado;
     const pedidoActualizado = await pedido.save();
     res.status(200).json(pedidoActualizado);
-  } catch (err) {
+  } catch (error) {
     res.status(404).json({
       message: "Error al editar el producto",
     });
@@ -79,7 +79,7 @@ export const eliminarPedido = async (req, res) => {
       });
     }
     res.status(200).json({ message: "Pedido eliminado correctamente" });
-  } catch (err) {
+  } catch (error) {
     res.status(404).json({
       message: "Error al eliminar el pedido",
     });

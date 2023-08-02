@@ -1,4 +1,4 @@
-import Usuario from "../models/usuario";
+import Usuario from "../models/usuarios";
 import bcrypt from "bcrypt";
 
 //POST
@@ -57,7 +57,6 @@ export const login = async (req, res) => {
       nombreUsuario: usuario.nombreUsuario,
     });
   } catch (error) {
-    console.log(error);
     res.status(404).json({
       mensaje: "Correo o password incorrecto",
     });
@@ -72,7 +71,6 @@ export const listarUsuarios = async (req, res) => {
     //envio la respuesta al frontend
     res.status(200).json(usuarios);
   } catch (error) {
-    console.log(error);
     res.status(404).json({
       mensaje: "Error al buscar los usuarios",
     });
