@@ -33,7 +33,7 @@ const validarProducto = [
     .withMessage("El detalle del producto debe contener entre 30 y 500 caracteres")
     .trim()
     .escape(),
-  check("categoria")
+  check("categoría")
     .notEmpty()
     .withMessage("La categoria es un dato obligatorio")
     .isIn(["entrada", "principal", "postre", "bebida"])
