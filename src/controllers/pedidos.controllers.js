@@ -39,7 +39,7 @@ export const obtenerPedidoPorId = async (req, res) => {
         message: "Pedido no encontrado",
       });
     }
-    res.json(pedido);
+    res.status(200).json(pedido);
   } catch (err) {
     res.status(404).json({
       message: "Error al intentar obtener el pedido",
@@ -61,10 +61,27 @@ export const actualizarPedido = async (req, res) => {
     pedido.productosDelMenu = productosDelMenu;
     pedido.estado = estado;
     const pedidoActualizado = await pedido.save();
-    res.json(pedidoActualizado);
+    res.status(200).json(pedidoActualizado);
   } catch (err) {
-    res.status(400).json({
-      message: "Error al editar el producto"
+    res.status(404).json({
+      message: "Error al editar el producto",
+    });
+  }
+};
+
+//DELTE
+export const eliminarPedido = async (req, res) => {
+  try {
+    const pedido = await Pedido.findByIdAndRemove(req.params.id);
+    if (!pedido) {
+      return res.status(404).json({
+        message: "Pedido no encontrado",
+      });
+    }
+    res.status(200).json({ message: "Pedido eliminado correctamente" });
+  } catch (err) {
+    res.status(404).json({
+      message: "Error al eliminar el pedido",
     });
   }
 };
