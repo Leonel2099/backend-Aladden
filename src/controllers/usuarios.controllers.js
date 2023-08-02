@@ -1,4 +1,4 @@
-import Usuario from "../models/usuarios";
+import Usuario from "../models/usuario";
 import bcrypt from "bcrypt";
 
 //POST
