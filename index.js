@@ -4,8 +4,9 @@ import * as dotenv from 'dotenv';
 import morgan from "morgan";
 import path from "path";
 import "./src/database/dbConection"
-import usuarioRouter from "./src/routes/usuarios.routes";
+import usuariosRouter from "./src/routes/usuarios.routes";
 import productosRouter from "./src/routes/productos.routes";
+import pedidosRouter from "./src/routes/pedidos.routes";
 
 dotenv.config();
 
@@ -25,4 +26,5 @@ app.use(morgan('dev'));
 app.use(express.static(path.join(__dirname, "/public")));
 
 app.use("/aladden",productosRouter);
-app.use("/aladden/usuarios",usuarioRouter);
+app.use("/aladden/usuarios",usuariosRouter);
+app.use("/aladden",pedidosRouter);
