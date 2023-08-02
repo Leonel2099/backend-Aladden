@@ -3,7 +3,7 @@ import Pedidos from "../models/pedidos";
 //GET
 export const obtenerPedidos = async (req, res) => {
   try {
-    const pedidos = await Pedidos.find().populate("usuario").populate("producto");
+    const pedidos = await Pedidos.find().populate("usuario").populate("productosDelMenu");
     res.status(200).json(pedidos);
   } catch (error) {
     res.status(404).json({
@@ -15,7 +15,7 @@ export const obtenerPedidos = async (req, res) => {
 //POST
 export const crearPedido = async (req, res) => {
   const { usuario, productosDelMenu, estado } = req.body;
-  const pedido = new Pedido({
+  const pedido = new Pedidos({
     usuario,
     productosDelMenu,
     estado,
@@ -33,12 +33,7 @@ export const crearPedido = async (req, res) => {
 // GET (por id)
 export const obtenerPedidoPorId = async (req, res) => {
   try {
-    const pedido = await Pedido.findById(req.params.id).populate("usuario").populate("productosDelMenu");
-    if (!pedido) {
-      return res.status(404).json({
-        message: "Pedido no encontrado",
-      });
-    }
+    const pedido = await Pedidos.findById(req.params.id).populate("usuario").populate("productosDelMenu");
     res.status(200).json(pedido);
   } catch (error) {
     res.status(404).json({
@@ -51,7 +46,7 @@ export const obtenerPedidoPorId = async (req, res) => {
 export const actualizarPedido = async (req, res) => {
   const { usuario, productosDelMenu, estado } = req.body;
   try {
-    const pedido = await Pedido.findById(req.params.id);
+    const pedido = await Pedidos.findById(req.params.id);
     if (!pedido) {
       return res.status(404).json({
         message: "Pedido no encontrado",
@@ -72,7 +67,7 @@ export const actualizarPedido = async (req, res) => {
 //DELTE
 export const eliminarPedido = async (req, res) => {
   try {
-    const pedido = await Pedido.findByIdAndRemove(req.params.id);
+    const pedido = await Pedidos.findByIdAndRemove(req.params.id);
     if (!pedido) {
       return res.status(404).json({
         message: "Pedido no encontrado",

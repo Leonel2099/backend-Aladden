@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
 // Definir el esquema del producto
 const productoSchema = new mongoose.Schema({
@@ -37,5 +37,6 @@ const productoSchema = new mongoose.Schema({
 });
 
 // Crear el modelo de Producto
-const Producto = mongoose.model('producto', productoSchema);
+const Producto = mongoose.model("Producto", productoSchema);
+
 module.exports = Producto;
