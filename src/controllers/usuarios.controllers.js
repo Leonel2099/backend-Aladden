@@ -25,6 +25,7 @@ export const crearUsuario = async (req, res) => {
       uid: usuario._id,
     });
   } catch (error) {
+    console.log(error);
     res.status(400).json({
       mensaje: "El usuario no pudo ser creado",
     });
@@ -73,6 +74,21 @@ export const listarUsuarios = async (req, res) => {
   } catch (error) {
     res.status(404).json({
       mensaje: "Error al buscar los usuarios",
+    });
+  }
+};
+
+export const borrarUsuario = async (req, res) => {
+  try {
+    //buscar en la BD un documento producto mediante el id
+    await Usuario.findByIdAndDelete(req.params.id);
+    res.status(200).json({
+      mensaje: "El producto fue eliminado correctamente",
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(404).json({
+      mensaje: "Error, no se pudo borrar el producto",
     });
   }
 };
