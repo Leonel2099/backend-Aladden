@@ -19,11 +19,9 @@ const usuarioSchema = new mongoose.Schema({
   },
   estado: {
     type: String,
-    required: true,
   },
   perfil: {
     type: String,
-    required: true,
   },
 });
 

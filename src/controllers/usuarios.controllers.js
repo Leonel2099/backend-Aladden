@@ -9,7 +9,7 @@ export const crearUsuario = async (req, res) => {
     let usuario = await Usuario.findOne({ email }); //devulve un null
     if (usuario) {
       //si el usuario existe
-      return res.status(400).json({
+      return res.status(401).json({
         mensaje: "ya existe un usuario con el correo enviado",
       });
     }
@@ -38,18 +38,18 @@ export const login = async (req, res) => {
     const { email, password } = req.body;
     //verificamos que el mail existe en la bd
     let usuario = await Usuario.findOne({ email });
-    if (!usuario) {
-      //si no encuentro al usuario
-      return res.status(404).json({
-        mensaje: "Correo o password invalido",
-      });
-    }
+    // if (!usuario) {
+    //   //si no encuentro al usuario
+    //   return res.status(404).json({
+    //     mensaje: "Correo o password invalido",
+    //   });
+    // }
     //verificar si las contraseñas coinciden
     const passwordValido = bcrypt.compareSync(password, usuario.password); // devuelve un valor booleano, true si los password coinciden
     //preguntar si la variable es invalida
-    if (!passwordValido) {
-      return res.status(404).json({
-        mensaje: "Correo o password invalido - password",
+    if (!passwordValido && !usuario) {
+      return res.status(401).json({
+        mensaje: "Correo o password invalido",
       });
     }
     //responder al frontend con el usuario valido

@@ -16,23 +16,21 @@ const validarUsuario =[
     .withMessage("El email ingresado no es valido"),
   check("password", "La contraseña debe de ser de 8 caracteres")
     .isLength({
-      min: 8,
+      min: 6,
+      max: 8
     })
     .notEmpty()
     .withMessage("La contraseña es obligatoria")
-    .matches(/^(?=.*\d)(?=.*[\u0021-\u002b\u003c-\u0040])(?=.*[A-Z])(?=.*[a-z])\S{8,9}$/)
+    .matches(/^(?=.*\d)(?=.*[\u0021-\u002b\u003c-\u0040])(?=.*[A-Z])(?=.*[a-z])\S{6,8}$/)
     .withMessage(
       "La contraseña debe tener 8 caracteres, al menos un dígito, al menos una minúscula, al menos una mayúscula y al menos un caracter no alfanumérico."
     ),
   check("estado")
-    .notEmpty()
-    .withMessage("La estado es obligatoria")
     .isIn(["activo", "inactivo"])
     .withMessage("La estado debe ser una opcion valida"),
   check("perfil")
-    .notEmpty()
-    .withMessage("El perfil es obligatoria")
     .isIn(["administrador", "usuario"])
+    .default("usuario")
     .withMessage("El perfil debe ser una opcion valida"),
     (req, res, next )=> { resultadoValidacion(req, res, next)}
 ];
