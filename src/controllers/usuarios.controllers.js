@@ -38,16 +38,10 @@ export const login = async (req, res) => {
     const { email, password } = req.body;
     //verificamos que el mail existe en la bd
     let usuario = await Usuario.findOne({ email });
-    // if (!usuario) {
-    //   //si no encuentro al usuario
-    //   return res.status(404).json({
-    //     mensaje: "Correo o password invalido",
-    //   });
-    // }
     //verificar si las contraseñas coinciden
     const passwordValido = bcrypt.compareSync(password, usuario.password); // devuelve un valor booleano, true si los password coinciden
     //preguntar si la variable es invalida
-    if (!passwordValido && !usuario) {
+    if (!passwordValido || !usuario) {
       return res.status(401).json({
         mensaje: "Correo o password invalido",
       });
@@ -55,7 +49,7 @@ export const login = async (req, res) => {
     //responder al frontend con el usuario valido
     res.status(200).json({
       mensaje: "El usuario es correcto",
-      nombreUsuario: usuario.nombreUsuario,
+      usuario: usuario
     });
   } catch (error) {
     res.status(404).json({
