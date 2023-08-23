@@ -3,9 +3,9 @@ import {borrarProducto, crearProducto, editarProducto, obtenerListaProductos, ob
 import validarProducto from "../helpers/validarProducto";
 
 const router = Router();
-router.route("/productos").post(validarProducto, crearProducto).get(obtenerListaProductos);
+router.route("/").post(validarProducto, crearProducto).get(obtenerListaProductos);
 
-router.route("/productos/:id").get(obtenerProducto).delete(borrarProducto).put(validarProducto, editarProducto);
+router.route("/:id").get(obtenerProducto).delete(borrarProducto).put(validarProducto, editarProducto);
 
 export default router;
 

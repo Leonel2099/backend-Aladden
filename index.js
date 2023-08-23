@@ -25,6 +25,6 @@ app.use(morgan('dev'));
 
 app.use(express.static(path.join(__dirname, "/public")));
 
-app.use("/aladden",productosRouter);
+app.use("/aladden/productos",productosRouter);
 app.use("/aladden/usuarios",usuariosRouter);
 app.use("/aladden",pedidosRouter);
