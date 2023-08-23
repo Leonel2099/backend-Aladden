@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
 // Definir el esquema del producto
 const productoSchema = new mongoose.Schema({
@@ -7,7 +7,7 @@ const productoSchema = new mongoose.Schema({
     required: true,
     unique: true,
     minlength: 2,
-    maxlength: 100,
+    maxlength: 50,
   },
   estado: {
     type: String,
@@ -16,13 +16,13 @@ const productoSchema = new mongoose.Schema({
   precio: {
     type: Number,
     required: true,
-    min: 200,
-    max: 5000,
+    min: 300,
+    max: 10000,
   },
   detalle: {
     type: String,
     required: true,
-    minlength: 30,
+    minlength: 10,
     maxlength: 500,
   },
   categoría: {
@@ -37,6 +37,6 @@ const productoSchema = new mongoose.Schema({
 });
 
 // Crear el modelo de Producto
-const Producto = mongoose.model('producto', productoSchema);
+const Producto = mongoose.model("Producto", productoSchema);
 
 module.exports = Producto;

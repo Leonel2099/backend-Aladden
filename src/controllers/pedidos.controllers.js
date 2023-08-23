@@ -1,9 +1,9 @@
-import Pedidos from "../models/pedidos";
+import Pedidos from "../models/pedido";
 
 //GET
 export const obtenerPedidos = async (req, res) => {
   try {
-    const pedidos = await Pedidos.find().populate("usuario").populate("producto");
+    const pedidos = await Pedidos.find().populate("usuario").populate("productosDelMenu");
     res.status(200).json(pedidos);
   } catch (error) {
     res.status(404).json({
@@ -15,7 +15,7 @@ export const obtenerPedidos = async (req, res) => {
 //POST
 export const crearPedido = async (req, res) => {
   const { usuario, productosDelMenu, estado } = req.body;
-  const pedido = new Pedido({
+  const pedido = new Pedidos({
     usuario,
     productosDelMenu,
     estado,
@@ -33,14 +33,9 @@ export const crearPedido = async (req, res) => {
 // GET (por id)
 export const obtenerPedidoPorId = async (req, res) => {
   try {
-    const pedido = await Pedido.findById(req.params.id).populate("usuario").populate("productosDelMenu");
-    if (!pedido) {
-      return res.status(404).json({
-        message: "Pedido no encontrado",
-      });
-    }
+    const pedido = await Pedidos.findById(req.params.id).populate("usuario").populate("productosDelMenu");
     res.status(200).json(pedido);
-  } catch (err) {
+  } catch (error) {
     res.status(404).json({
       message: "Error al intentar obtener el pedido",
     });
@@ -51,7 +46,7 @@ export const obtenerPedidoPorId = async (req, res) => {
 export const actualizarPedido = async (req, res) => {
   const { usuario, productosDelMenu, estado } = req.body;
   try {
-    const pedido = await Pedido.findById(req.params.id);
+    const pedido = await Pedidos.findById(req.params.id);
     if (!pedido) {
       return res.status(404).json({
         message: "Pedido no encontrado",
@@ -62,7 +57,7 @@ export const actualizarPedido = async (req, res) => {
     pedido.estado = estado;
     const pedidoActualizado = await pedido.save();
     res.status(200).json(pedidoActualizado);
-  } catch (err) {
+  } catch (error) {
     res.status(404).json({
       message: "Error al editar el producto",
     });
@@ -72,14 +67,14 @@ export const actualizarPedido = async (req, res) => {
 //DELTE
 export const eliminarPedido = async (req, res) => {
   try {
-    const pedido = await Pedido.findByIdAndRemove(req.params.id);
+    const pedido = await Pedidos.findByIdAndRemove(req.params.id);
     if (!pedido) {
       return res.status(404).json({
         message: "Pedido no encontrado",
       });
     }
     res.status(200).json({ message: "Pedido eliminado correctamente" });
-  } catch (err) {
+  } catch (error) {
     res.status(404).json({
       message: "Error al eliminar el pedido",
     });

@@ -9,7 +9,7 @@ export const crearUsuario = async (req, res) => {
     let usuario = await Usuario.findOne({ email }); //devulve un null
     if (usuario) {
       //si el usuario existe
-      return res.status(400).json({
+      return res.status(401).json({
         mensaje: "ya existe un usuario con el correo enviado",
       });
     }
@@ -25,6 +25,7 @@ export const crearUsuario = async (req, res) => {
       uid: usuario._id,
     });
   } catch (error) {
+    console.log(error);
     res.status(400).json({
       mensaje: "El usuario no pudo ser creado",
     });
@@ -37,27 +38,20 @@ export const login = async (req, res) => {
     const { email, password } = req.body;
     //verificamos que el mail existe en la bd
     let usuario = await Usuario.findOne({ email });
-    if (!usuario) {
-      //si no encuentro al usuario
-      return res.status(404).json({
-        mensaje: "Correo o password invalido",
-      });
-    }
     //verificar si las contraseñas coinciden
     const passwordValido = bcrypt.compareSync(password, usuario.password); // devuelve un valor booleano, true si los password coinciden
     //preguntar si la variable es invalida
-    if (!passwordValido) {
-      return res.status(404).json({
-        mensaje: "Correo o password invalido - password",
+    if (!passwordValido || !usuario) {
+      return res.status(401).json({
+        mensaje: "Correo o password invalido",
       });
     }
     //responder al frontend con el usuario valido
     res.status(200).json({
       mensaje: "El usuario es correcto",
-      nombreUsuario: usuario.nombreUsuario,
+      usuario: usuario
     });
   } catch (error) {
-    console.log(error);
     res.status(404).json({
       mensaje: "Correo o password incorrecto",
     });
@@ -72,9 +66,23 @@ export const listarUsuarios = async (req, res) => {
     //envio la respuesta al frontend
     res.status(200).json(usuarios);
   } catch (error) {
-    console.log(error);
     res.status(404).json({
       mensaje: "Error al buscar los usuarios",
+    });
+  }
+};
+
+export const borrarUsuario = async (req, res) => {
+  try {
+    //buscar en la BD un documento producto mediante el id
+    await Usuario.findByIdAndDelete(req.params.id);
+    res.status(200).json({
+      mensaje: "El producto fue eliminado correctamente",
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(404).json({
+      mensaje: "Error, no se pudo borrar el producto",
     });
   }
 };

@@ -3,6 +3,10 @@ import cors from 'cors';
 import * as dotenv from 'dotenv';
 import morgan from "morgan";
 import path from "path";
+import "./src/database/dbConection"
+import usuariosRouter from "./src/routes/usuarios.routes";
+import productosRouter from "./src/routes/productos.routes";
+import pedidosRouter from "./src/routes/pedidos.routes";
 
 dotenv.config();
 
@@ -21,7 +25,6 @@ app.use(morgan('dev'));
 
 app.use(express.static(path.join(__dirname, "/public")));
 
-// http://localhost:4000/prueba
-app.get('/prueba', (req, res)=>{
-    res.send('Esta es una prueba de mi ruta GET')
-})
+app.use("/aladden/productos",productosRouter);
+app.use("/aladden/usuarios",usuariosRouter);
+app.use("/aladden",pedidosRouter);
