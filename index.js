@@ -27,4 +27,4 @@ app.use(express.static(path.join(__dirname, "/public")));
 
 app.use("/aladden/productos",productosRouter);
 app.use("/aladden/usuarios",usuariosRouter);
-app.use("/aladden",pedidosRouter);
+app.use("/aladden/pedidos",pedidosRouter);
